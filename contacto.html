@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/6b4c89b0a1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="estilos_contacto.css">
+    <link rel="stylesheet" href="estilos_comunes.css">
+    <title>FIKA</title>
+    <link rel="icon" href="fika.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Carrois+Gothic&display=swap"
+        rel="stylesheet">
+
+
+
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="item header">
+            <div style="display:flex; justify-content: center; padding-top:10px  ">
+
+                <img src="fika_logo.jpeg" alt="Logo FIKA" width="180">
+            </div>
+            <div class="navBar">
+                <div>
+                    <h1><a href="index.html" ;>Home</a></h1>
+                </div>
+                <div>
+                    <h1><a href="about_us.html" ;>About us</a></h1>
+                </div>
+                <div>
+                    <h1><a href="interiorismo.html" ;>Interiorismo</a></h1>
+                </div>
+                <div>
+                    <h1><a href="sillones.html" ;>Sillones</a></h1>
+                </div>
+                <div>
+                    <h1><a href="cortinas.html" ;>Cortinas</a></h1>
+                </div>
+                <div>
+                    <h1><a href="deco.html" ;>Deco</a></h1>
+                </div>
+                <div>
+                    <h1><a style="color:darkkhaki" ; href="contacto.html" ;>Contacto</a></h1>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <!-- Principal -->
+        <div class="item contenido">
+            <div>
+                <h2>Hacenos tu consulta / Solicita tu presupuesto</h2>
+            </div>
+
+            <div>
+                <form name="fvalida">
+                    <table>
+                        <tr>
+                            <td align="right">Nombre: </td>
+                            <td><input type="text" name="nombre" size="30" maxlength="120"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Tel: </td>
+                            <td><input type="text" name="tel" size="30" maxlength="120"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Mail: </td>
+                            <td><input type="text" name="mail" size="30" maxlength="120"></td>
+                        </tr>
+
+                        <tr>
+                            <td align="right">Interés:</td>
+                            <td>
+                                <select name=interes>
+                                    <option value="Elegir">Elegir
+                                    <option value="Interiorismo">Interiorismo
+                                    <option value="Sillones">Sillones
+                                    <option value="Cortinas">Cortinas
+                                    <option value="Deco">Deco
+                                    <option value="Otro">Otro
+                                </select>
+                            </td>
+                        </tr>
+                                                <tr>
+                            <td align="right">Consulta:</label></td>
+                            <td> <textarea id="consulta" name="consulta" rows="10" cols="32" placeholder="Dejanos tu consulta...">
+                                </textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <!-- Al presionar el botón, se llama a la función de validacion -->
+                                <input type="button" id="b1" value="Enviar" onclick="validarEnviar()">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div>
+                <hr>
+                
+                <button onclick="traerDatosAPI()">Traer nombre API</button>
+                
+            </div>
+            <div id="contenido" >
+                <!-- Aquí insertaremos contenido que recuperamos
+                mediante la API -->
+            </div>
+            <script>
+                //traigo nombre de la api
+
+                function traerDatosAPI() {
+                    fetch('https://randomuser.me/api') // API a leer
+                        // Cuando ha finalizado la lectura
+                        // guardo en datos el texto leido:
+                        .then(datos => datos.json()) //res va a guardar el dato mediante el método .json()
+                        .then(datos => {
+                            // Y luego copio ese texto en #contenido.
+                            console.log(datos)
+                            contenido.innerHTML +=
+                                `<div>
+                                 Nombre: ${datos.results[0].name.last}, ${datos.results[0].name.first}<br>
+                                 </div>`
+                        })
+                }
+            
+                // Esta función valida todos los campos del form.
+                // Si alguno no cumple con los requisitos, se aborta
+                // con return. Caso contrario, al final se realiza
+                // efectivamente el envio de los datos.
+
+                function validarEnviar() {
+                    //valido el nombre
+                    if (document.fvalida.nombre.value.length <= 5) {
+                        alert("Tiene que escribir su nombre")
+                        document.fvalida.nombre.focus()
+                        return 0;
+                    }
+                    //valido tel o mail
+                    if(document.fvalida.tel.value.length==0 && document.fvalida.mail.value.length==0){
+                        alert("Tiene que ingresar un telefono o mail")
+                        document.fvalida.tel.focus()
+                        return 0;
+                    }
+                    //valido el interés
+                    if (document.fvalida.interes.selectedIndex == 0) {
+                        alert("Debe seleccionar un motivo de su contacto.")
+                        document.fvalida.interes.focus()
+                        return 0;
+                    }
+                    //valido consulta
+                     
+                     if(document.getElementById('consulta').innerText == '') {
+                        alert("Tiene que ingresar la consulta")
+                        document.fvalida.consulta.focus()
+                        return 0;
+                    }
+
+                    //Finalmente, si llegó hasta aqui, se envia el form.
+                    alert("Muchas gracias por enviar el formulario");
+                    document.fvalida.submit();
+                }
+
+            </script>
+        </div>
+
+
+        <!-- Derecha -->
+        <div class="item der">
+            <h3>Conocé nuestro showroom!!!</h3>
+            <h3>Coordiná tu visita. <br><span class="fa-brands fa-whatsapp fa-1x"></span><span>54 11 4173 1302</span>
+            </h3>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3290.5396789825377!2d-58.87995178475061!3d-34.43844598050266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bc9d01d2deb121%3A0x7e303b4d832d400f!2sChillan%201206%2C%20Villa%20Rosa%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1667048730297!5m2!1ses-419!2sar"
+                width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+
+
+        <!-- Footer -->
+        <div class="item pie">
+            <div style="display:flex; justify-content: center; height:auto;">
+                <span> Seguinos en </span>
+                <a href="https://www.instagram.com/fikastoredeco/" target="_blank">
+                    <span class="fa-brands fa-instagram fa-4x"></span>
+                </a>
+                <span style="margin-left:3vw;margin-right:3vw">/</span>
+                <span class="fa-brands fa-whatsapp fa-4x"></span>
+                <span style="margin-left:3vw;"></span>
+                <span>+54 11 4173 1302</span>
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>

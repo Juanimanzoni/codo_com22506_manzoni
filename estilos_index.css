@@ -1,0 +1,62 @@
+/*----------------------------------------------------------------*/
+/* Defino el contenedor grid                                   */
+
+.container {
+    display: grid;
+    /* Uso un atajo para definir tres filas / dos columnas */
+    grid-template: auto 1fr 40px /  70% auto;
+    /* Distribuyo filas */
+    grid-template-areas: "header header"
+        "contenido der"
+        "pie pie ";
+    /* separo items  gap */
+    gap: 2%;
+            }
+/*----------------------------------------------------------------*/
+/* Defino nombre de cada area del grid                 */
+.header    { grid-area: header;}
+.der       { grid-area: der;}
+.contenido { grid-area: contenido;}
+.pie       { grid-area: pie;}
+
+/*----------------------------------------------------------------*/
+/* Defino la apariencia de cada item del grid                  */
+
+.contenido{
+    max-width: 950px;
+}
+
+/*Para el slider del index
+------------------------------------------------------*/
+.slider-frame{
+    width: auto;
+    height:auto;
+    overflow:hidden;
+    margin-left: 10px;
+    }
+.slider-frame  ul{
+    display:flex;
+    padding: 0;
+    width:500%;
+    animation: slide 22s infinite ease-in-out;
+    animation-direction: alternate;
+   }
+.slider-frame li{
+    list-style: none;
+    }
+.slider-frame img{
+    width:100%
+}
+@keyframes slide{
+    5%{margin-left:0%;}
+    12%{margin-left:0%;}
+    26%{margin-left:-100%;}
+    34%{margin-left:-100%;}
+    46%{margin-left:-200%;}
+    54%{margin-left:-200%;}
+    66%{margin-left:-300%;}
+    74%{margin-left:-300%;}
+    88%{margin-left:-400%;}
+    95%{margin-left:-400%;}
+    }
+    /*--------------------------------------------------------*/
